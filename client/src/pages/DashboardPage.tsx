@@ -10,6 +10,7 @@ import { enUS } from "date-fns/locale/en-US";
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
 import { logout as logoutApi } from "../api/auth.api";
 import {
   getEvents,
@@ -113,11 +114,13 @@ const DashboardPage = () => {
       await createEvent(data);
       closeModal();
       await fetchEvents();
+      toast.success("Event berhasil dibuat!");
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
-      setServerError(
-        error.response?.data?.message || "Terjadi kesalahan saat membuat event"
-      );
+      const message =
+        error.response?.data?.message || "Terjadi kesalahan saat membuat event";
+      setServerError(message);
+      toast.error(message);
     }
   };
 
@@ -126,8 +129,9 @@ const DashboardPage = () => {
       try {
         await deleteEvent(event.id);
         await fetchEvents();
+        toast.success("Event berhasil dihapus!");
       } catch {
-        alert("Gagal menghapus event");
+        toast.error("Gagal menghapus event");
       }
     }
   };

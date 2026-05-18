@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import { login as loginApi } from "../api/auth.api";
 import { loginSchema, type LoginFormData } from "../schemas/auth.schema";
 
@@ -22,12 +23,14 @@ const LoginPage = () => {
       setServerError("");
       const res = await loginApi(data.username, data.password);
       localStorage.setItem("token", res.token);
+      toast.success("Login berhasil!");
       navigate("/", { replace: true });
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
-      setServerError(
-        error.response?.data?.message || "Terjadi kesalahan saat login"
-      );
+      const message =
+        error.response?.data?.message || "Terjadi kesalahan saat login";
+      setServerError(message);
+      toast.error(message);
     }
   };
 
