@@ -133,34 +133,195 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-gray-800">Dashboard</h1>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "var(--color-background)",
+        fontFamily: "'Inter', sans-serif",
+      }}
+    >
+      {/* ── Header ── */}
+      <header
+        style={{
+          background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%)",
+          padding: "0",
+          position: "sticky",
+          top: 0,
+          zIndex: 40,
+          boxShadow: "0 4px 20px rgba(99, 102, 241, 0.25)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            padding: "16px 24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            {/* Logo icon */}
+            <div
+              style={{
+                width: "36px",
+                height: "36px",
+                borderRadius: "10px",
+                background: "rgba(255,255,255,0.2)",
+                backdropFilter: "blur(10px)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "18px",
+              }}
+            >
+              📅
+            </div>
+            <div>
+              <h1
+                style={{
+                  fontSize: "18px",
+                  fontWeight: 700,
+                  color: "#fff",
+                  margin: 0,
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1.2,
+                }}
+              >
+                Event Dashboard
+              </h1>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "rgba(255,255,255,0.7)",
+                  margin: 0,
+                  fontWeight: 400,
+                }}
+              >
+                Manage your schedule
+              </p>
+            </div>
+          </div>
+
           <button
             onClick={handleLogout}
-            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 text-sm"
+            style={{
+              background: "rgba(255,255,255,0.15)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "#fff",
+              padding: "8px 18px",
+              borderRadius: "var(--radius-sm)",
+              fontSize: "13px",
+              fontWeight: 500,
+              cursor: "pointer",
+              transition: "all var(--transition-fast)",
+              fontFamily: "'Inter', sans-serif",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(255,255,255,0.25)";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "rgba(255,255,255,0.15)";
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
           >
             Logout
           </button>
         </div>
       </header>
 
-      {/* Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex justify-end mb-4">
+      {/* ── Main Content ── */}
+      <main
+        style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+          padding: "24px 24px 48px",
+        }}
+      >
+        {/* Stats & Action Bar */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: "20px",
+            flexWrap: "wrap",
+            gap: "12px",
+          }}
+        >
+          <div>
+            <h2
+              style={{
+                fontSize: "22px",
+                fontWeight: 700,
+                color: "var(--color-text-primary)",
+                margin: 0,
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Calendar
+            </h2>
+            <p
+              style={{
+                fontSize: "14px",
+                color: "var(--color-text-secondary)",
+                margin: "2px 0 0",
+              }}
+            >
+              {events.length} event{events.length !== 1 ? "s" : ""} scheduled
+            </p>
+          </div>
+
           <button
             onClick={openModal}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm"
+            style={{
+              background: "var(--color-primary)",
+              color: "#fff",
+              border: "none",
+              padding: "10px 22px",
+              borderRadius: "var(--radius-sm)",
+              fontSize: "14px",
+              fontWeight: 600,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              transition: "all var(--transition-fast)",
+              boxShadow: "0 2px 8px var(--color-primary-glow)",
+              fontFamily: "'Inter', sans-serif",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--color-primary-hover)";
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow = "0 6px 20px var(--color-primary-glow)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "var(--color-primary)";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 2px 8px var(--color-primary-glow)";
+            }}
           >
-            + Create Data
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            Create Data
           </button>
         </div>
 
+        {/* Calendar Card */}
         <div
-          className="bg-white rounded-lg shadow p-4"
-          style={{ height: 600 }}
+          style={{
+            background: "var(--color-surface)",
+            borderRadius: "var(--radius-lg)",
+            boxShadow: "var(--shadow-md)",
+            padding: "20px",
+            border: "1px solid var(--color-border-light)",
+            height: "calc(100vh - 200px)",
+            minHeight: "500px",
+          }}
         >
           <Calendar
             localizer={localizer}
@@ -178,107 +339,348 @@ const DashboardPage = () => {
         </div>
       </main>
 
-      {/* Create Data Modal */}
+      {/* ── Create Data Modal ── */}
       <Modal
         isOpen={modalOpen}
         onRequestClose={closeModal}
-        className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-auto mt-24 outline-none"
-        overlayClassName="fixed inset-0 bg-black/50 flex items-start justify-center pt-24"
+        closeTimeoutMS={250}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(15, 23, 42, 0.6)",
+            backdropFilter: "blur(4px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 50,
+            padding: "20px",
+          },
+          content: {
+            position: "relative",
+            inset: "auto",
+            background: "var(--color-surface)",
+            borderRadius: "var(--radius-xl)",
+            boxShadow: "var(--shadow-xl)",
+            padding: "0",
+            border: "1px solid var(--color-border-light)",
+            maxWidth: "460px",
+            width: "100%",
+            maxHeight: "90vh",
+            overflow: "auto",
+          },
+        }}
       >
-        <h2 className="text-lg font-bold mb-4">Create Data</h2>
-
-        {serverError && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded text-sm">
-            {serverError}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit(handleCreateEvent)} className="space-y-4">
+        {/* Modal Header */}
+        <div
+          style={{
+            padding: "24px 28px 0",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              {...register("email")}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="contoh@email.com"
-            />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-600">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Date
-            </label>
-            <input
-              type="date"
-              {...register("date")}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.date && (
-              <p className="mt-1 text-sm text-red-600">
-                {errors.date.message}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Description
-            </label>
-            <textarea
-              {...register("description")}
-              rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Masukkan deskripsi"
-            />
-            {errors.description && (
-              <p className="mt-1 text-sm text-red-600">
-                {errors.description.message}
-              </p>
-            )}
-          </div>
-
-          <div className="flex gap-3 pt-2">
-            <button
-              type="button"
-              onClick={closeModal}
-              className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300"
+            <h2
+              style={{
+                fontSize: "20px",
+                fontWeight: 700,
+                color: "var(--color-text-primary)",
+                margin: 0,
+                letterSpacing: "-0.02em",
+              }}
             >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              Create Data
+            </h2>
+            <p
+              style={{
+                fontSize: "13px",
+                color: "var(--color-text-muted)",
+                margin: "4px 0 0",
+              }}
             >
-              {isSubmitting && (
-                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                    fill="none"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                  />
-                </svg>
-              )}
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </button>
+              Add a new event to the calendar
+            </p>
           </div>
-        </form>
+          <button
+            onClick={closeModal}
+            style={{
+              width: "32px",
+              height: "32px",
+              borderRadius: "8px",
+              border: "none",
+              background: "var(--color-background)",
+              color: "var(--color-text-muted)",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "18px",
+              transition: "all var(--transition-fast)",
+              fontFamily: "'Inter', sans-serif",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--color-border)";
+              e.currentTarget.style.color = "var(--color-text-primary)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "var(--color-background)";
+              e.currentTarget.style.color = "var(--color-text-muted)";
+            }}
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Modal Body */}
+        <div style={{ padding: "20px 28px 28px" }}>
+          {serverError && (
+            <div
+              style={{
+                marginBottom: "16px",
+                padding: "12px 16px",
+                background: "var(--color-danger-light)",
+                color: "var(--color-danger)",
+                borderRadius: "var(--radius-sm)",
+                fontSize: "13px",
+                fontWeight: 500,
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                border: "1px solid rgba(239, 68, 68, 0.15)",
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M8 5v3.5M8 10.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+              {serverError}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit(handleCreateEvent)}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+              {/* Email Field */}
+              <div>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "var(--color-text-primary)",
+                    marginBottom: "6px",
+                  }}
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  {...register("email")}
+                  placeholder="contoh@email.com"
+                  style={{
+                    width: "100%",
+                    padding: "10px 14px",
+                    border: `1.5px solid ${errors.email ? "var(--color-danger)" : "var(--color-border)"}`,
+                    borderRadius: "var(--radius-sm)",
+                    fontSize: "14px",
+                    color: "var(--color-text-primary)",
+                    background: "var(--color-surface)",
+                    outline: "none",
+                    transition: "all var(--transition-fast)",
+                    fontFamily: "'Inter', sans-serif",
+                    boxSizing: "border-box",
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = "var(--color-primary)";
+                    e.currentTarget.style.boxShadow = "0 0 0 3px var(--color-primary-glow)";
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = errors.email ? "var(--color-danger)" : "var(--color-border)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                />
+                {errors.email && (
+                  <p style={{ marginTop: "4px", fontSize: "12px", color: "var(--color-danger)", fontWeight: 500 }}>
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Date Field */}
+              <div>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "var(--color-text-primary)",
+                    marginBottom: "6px",
+                  }}
+                >
+                  Date
+                </label>
+                <input
+                  type="date"
+                  {...register("date")}
+                  style={{
+                    width: "100%",
+                    padding: "10px 14px",
+                    border: `1.5px solid ${errors.date ? "var(--color-danger)" : "var(--color-border)"}`,
+                    borderRadius: "var(--radius-sm)",
+                    fontSize: "14px",
+                    color: "var(--color-text-primary)",
+                    background: "var(--color-surface)",
+                    outline: "none",
+                    transition: "all var(--transition-fast)",
+                    fontFamily: "'Inter', sans-serif",
+                    boxSizing: "border-box",
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = "var(--color-primary)";
+                    e.currentTarget.style.boxShadow = "0 0 0 3px var(--color-primary-glow)";
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = errors.date ? "var(--color-danger)" : "var(--color-border)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                />
+                {errors.date && (
+                  <p style={{ marginTop: "4px", fontSize: "12px", color: "var(--color-danger)", fontWeight: 500 }}>
+                    {errors.date.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Description Field */}
+              <div>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "var(--color-text-primary)",
+                    marginBottom: "6px",
+                  }}
+                >
+                  Description
+                </label>
+                <textarea
+                  {...register("description")}
+                  rows={3}
+                  placeholder="Masukkan deskripsi"
+                  style={{
+                    width: "100%",
+                    padding: "10px 14px",
+                    border: `1.5px solid ${errors.description ? "var(--color-danger)" : "var(--color-border)"}`,
+                    borderRadius: "var(--radius-sm)",
+                    fontSize: "14px",
+                    color: "var(--color-text-primary)",
+                    background: "var(--color-surface)",
+                    outline: "none",
+                    transition: "all var(--transition-fast)",
+                    fontFamily: "'Inter', sans-serif",
+                    resize: "vertical",
+                    boxSizing: "border-box",
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = "var(--color-primary)";
+                    e.currentTarget.style.boxShadow = "0 0 0 3px var(--color-primary-glow)";
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = errors.description ? "var(--color-danger)" : "var(--color-border)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                />
+                {errors.description && (
+                  <p style={{ marginTop: "4px", fontSize: "12px", color: "var(--color-danger)", fontWeight: 500 }}>
+                    {errors.description.message}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div
+              style={{
+                height: "1px",
+                background: "var(--color-border-light)",
+                margin: "24px 0 20px",
+              }}
+            />
+
+            {/* Actions */}
+            <div style={{ display: "flex", gap: "10px" }}>
+              <button
+                type="button"
+                onClick={closeModal}
+                style={{
+                  flex: 1,
+                  padding: "10px 18px",
+                  borderRadius: "var(--radius-sm)",
+                  border: "1.5px solid var(--color-border)",
+                  background: "var(--color-surface)",
+                  color: "var(--color-text-secondary)",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  cursor: "pointer",
+                  transition: "all var(--transition-fast)",
+                  fontFamily: "'Inter', sans-serif",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "var(--color-background)";
+                  e.currentTarget.style.borderColor = "var(--color-text-muted)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "var(--color-surface)";
+                  e.currentTarget.style.borderColor = "var(--color-border)";
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                style={{
+                  flex: 1,
+                  padding: "10px 18px",
+                  borderRadius: "var(--radius-sm)",
+                  border: "none",
+                  background: isSubmitting ? "var(--color-text-muted)" : "var(--color-primary)",
+                  color: "#fff",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  cursor: isSubmitting ? "not-allowed" : "pointer",
+                  transition: "all var(--transition-fast)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  boxShadow: isSubmitting ? "none" : "0 2px 8px var(--color-primary-glow)",
+                  fontFamily: "'Inter', sans-serif",
+                  opacity: isSubmitting ? 0.7 : 1,
+                }}
+                onMouseEnter={(e) => {
+                  if (!isSubmitting) {
+                    e.currentTarget.style.background = "var(--color-primary-hover)";
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSubmitting) {
+                    e.currentTarget.style.background = "var(--color-primary)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }
+                }}
+              >
+                {isSubmitting && (
+                  <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" opacity="0.25" />
+                    <path d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" fill="currentColor" opacity="0.75" />
+                  </svg>
+                )}
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </button>
+            </div>
+          </form>
+        </div>
       </Modal>
     </div>
   );

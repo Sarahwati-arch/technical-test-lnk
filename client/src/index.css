@@ -1,2 +1,243 @@
 @import "tailwindcss";
 @import "react-big-calendar/lib/css/react-big-calendar.css";
+
+/* ─── Design Tokens ─── */
+:root {
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-light: #eef2ff;
+  --color-primary-glow: rgba(99, 102, 241, 0.15);
+
+  --color-surface: #ffffff;
+  --color-surface-elevated: #ffffff;
+  --color-background: #f0f2f8;
+
+  --color-text-primary: #1e1b4b;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
+
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
+
+  --color-danger: #ef4444;
+  --color-danger-hover: #dc2626;
+  --color-danger-light: #fef2f2;
+
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 40px -4px rgba(0, 0, 0, 0.1), 0 8px 16px -6px rgba(0, 0, 0, 0.06);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ─── Global Reset & Base ─── */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+}
+
+/* ─── Calendar Override Styles ─── */
+.rbc-calendar {
+  font-family: 'Inter', sans-serif !important;
+}
+
+.rbc-toolbar {
+  padding: 12px 4px !important;
+  margin-bottom: 12px !important;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rbc-toolbar button {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  padding: 7px 16px !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text-secondary) !important;
+  background: var(--color-surface) !important;
+  transition: all var(--transition-fast) !important;
+  cursor: pointer !important;
+  line-height: 1.4 !important;
+}
+
+.rbc-toolbar button:hover {
+  background: var(--color-primary-light) !important;
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+.rbc-toolbar button.rbc-active {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 2px 8px var(--color-primary-glow) !important;
+}
+
+.rbc-toolbar-label {
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  color: var(--color-text-primary) !important;
+  letter-spacing: -0.02em !important;
+}
+
+.rbc-header {
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  color: var(--color-text-muted) !important;
+  padding: 10px 8px !important;
+  border-bottom: 2px solid var(--color-border) !important;
+  background: var(--color-background) !important;
+}
+
+.rbc-month-view,
+.rbc-time-view {
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden !important;
+}
+
+.rbc-month-row + .rbc-month-row {
+  border-top: 1px solid var(--color-border-light) !important;
+}
+
+.rbc-day-bg + .rbc-day-bg {
+  border-left: 1px solid var(--color-border-light) !important;
+}
+
+.rbc-off-range-bg {
+  background: #f8fafc !important;
+}
+
+.rbc-today {
+  background: var(--color-primary-light) !important;
+}
+
+.rbc-date-cell {
+  padding: 6px 8px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--color-text-secondary) !important;
+}
+
+.rbc-date-cell.rbc-now {
+  font-weight: 700 !important;
+  color: var(--color-primary) !important;
+}
+
+.rbc-event {
+  background: var(--color-primary) !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 2px 8px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 1px 3px var(--color-primary-glow) !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.rbc-event:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px var(--color-primary-glow) !important;
+}
+
+.rbc-event-content {
+  font-size: 12px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.rbc-show-more {
+  color: var(--color-primary) !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  background: transparent !important;
+}
+
+.rbc-overlay {
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-xl) !important;
+  border: 1px solid var(--color-border) !important;
+  padding: 12px !important;
+}
+
+.rbc-overlay-header {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: var(--color-text-primary) !important;
+  border-bottom: 1px solid var(--color-border-light) !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 6px !important;
+}
+
+/* ─── Modal Animation ─── */
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.ReactModal__Content {
+  transform: scale(0.95) translateY(10px);
+  transition: transform var(--transition-spring), opacity var(--transition-smooth);
+  opacity: 0;
+}
+
+.ReactModal__Content--after-open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.ReactModal__Content--before-close {
+  transform: scale(0.95) translateY(10px);
+  opacity: 0;
+}
+
+/* ─── Custom Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
